@@ -10,6 +10,9 @@ npm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# liaison avec l'application Clever Cloud (identifiants propres à chaque poste)
+.clever.json
+
 # payload — base SQLite locale et fichiers uploadés en local (dev) ; en production : Postgres et stockage S3
 /payload.db*
 /media

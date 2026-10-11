@@ -29,24 +29,25 @@ const CANONICAL = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:
 /**
  * Vrai pour un nom de domaine secondaire à rediriger vers l'adresse
  * officielle. Ne sont pas redirigés : l'adresse officielle elle-même,
- * les adresses techniques *.cleverapps.io et *.vercel.app (préproduction, démonstration) et, tant que le site
+ * l'adresse technique *.cleverapps.io (préproduction, démonstration) et, tant que le site
  * n'a pas de domaine officiel (développement local), aucune adresse.
  */
-/** Adresses techniques des hébergeurs (préproduction, démonstration) : jamais redirigées, jamais indexées. */
-const TECHNICAL_HOSTS = ['.cleverapps.io', '.vercel.app']
+/** Adresse technique de Clever Cloud (préproduction, démonstration) : jamais redirigée, jamais indexée. */
+const isTechnicalHost = (host: string | null) => Boolean(host?.endsWith('.cleverapps.io'))
 
 function isAliasHost(host: string | null): boolean {
   if (!host || CANONICAL.hostname === 'localhost') return false
-  return host !== CANONICAL.host && !TECHNICAL_HOSTS.some((suffix) => host.endsWith(suffix))
+  return host !== CANONICAL.host && !isTechnicalHost(host)
 }
 
 /**
- * Toute autre adresse servant le site (l'adresse technique *.cleverapps.io
- * de Clever Cloud, par exemple) ne doit pas être indexée : elle ferait
- * doublon avec le site officiel dans les moteurs de recherche.
+ * Toute autre adresse que l'adresse officielle ne doit pas être indexée : elle ferait doublon avec
+ * le site officiel dans les moteurs de recherche. L'adresse technique *.cleverapps.io ne l'est
+ * jamais, même déclarée comme adresse du site (démonstration avant mise en production).
  */
 function withHostPolicy(request: NextRequest, response: NextResponse): NextResponse {
-  if (request.headers.get('host') !== CANONICAL.host) response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  const host = request.headers.get('host')
+  if (host !== CANONICAL.host || isTechnicalHost(host)) response.headers.set('X-Robots-Tag', 'noindex, nofollow')
   return response
 }
 

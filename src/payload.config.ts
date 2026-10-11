@@ -67,7 +67,8 @@ export default buildConfig({
   },
   db: usePostgres
     ? postgresAdapter({
-        pool: { connectionString: databaseURI, max: 3 },
+        // DATABASE_POOL_MAX : à réduire sur une base limitée en connexions (offre « dev » de Clever Cloud).
+        pool: { connectionString: databaseURI, max: Number(process.env.DATABASE_POOL_MAX) || 3 },
         // Les changements de schéma passent par des migrations versionnées
         // (src/migrations), jamais par le « push » interactif de Payload.
         push: false,

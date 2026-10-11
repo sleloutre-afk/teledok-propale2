@@ -86,22 +86,6 @@ Tout ce qui apparaît entre crochets `[…]` sur le site est en attente de TeleD
 - pages légales, mentions RGPD des formulaires, délais de recontact ;
 - icône du site (favicon) ; adresses e-mail destinataires des formulaires ; nom de domaine.
 
-## Démonstration sur Vercel
-
-Le dépôt se déploie tel quel (racine du projet = racine du dépôt), à condition de fournir une base
-PostgreSQL : les pages sont pré-rendues avec les contenus du back-office, la compilation échoue sans elle.
-
-1. Créer une base PostgreSQL (Neon ou Supabase, depuis l'onglet Storage de Vercel par exemple).
-2. Variables d'environnement du projet Vercel : `DATABASE_URI` (chaîne de connexion `postgres://…`),
-   `PAYLOAD_SECRET` (`openssl rand -hex 32`) et `NEXT_PUBLIC_SITE_URL` (adresse de la démonstration,
-   sans « / » final). Les autres sont facultatives (voir `.env.example`).
-3. Commande de build : `npx payload migrate && npm run build` (crée les tables, puis compile).
-4. Contenus de départ, une fois, depuis ce poste : `DATABASE_URI="postgres://…" npm run seed`, puis
-   relancer un déploiement pour que les pages les reprennent.
-
-Sous une adresse `*.vercel.app`, le site interdit son indexation. Sans `RESEND_API_KEY`, les formulaires
-signalent un échec d'envoi ; sans stockage S3, les fichiers déposés dans le back-office ne sont pas conservés.
-
 ## Hébergement (Clever Cloud)
 
 Même dispositif que les sites Capitello et Doxamed : application Node, add-on PostgreSQL, add-on Cellar
@@ -115,6 +99,10 @@ Même dispositif que les sites Capitello et Doxamed : application Node, add-on P
   versionner `src/migrations`. La migration initiale a été vérifiée sur une base PostgreSQL locale
   (création des tables, contenus de départ, compilation).
 - **Contenus de départ** : `npm run seed` avec les variables de production.
+- **Démonstration** : l'application de démonstration tourne sur une instance XS avec l'offre
+  PostgreSQL « dev » (5 connexions, d'où `DATABASE_POOL_MAX=1`) et sans Cellar : les fichiers déposés
+  dans le back-office y sont perdus à chaque redéploiement. `NEXT_PUBLIC_SITE_URL` y vaut l'adresse
+  `*.cleverapps.io` de l'application, qui n'est jamais indexée.
 - **Adresses** : l'adresse officielle est celle de `NEXT_PUBLIC_SITE_URL`. Les autres domaines déclarés
   sur l'application y sont redirigés ; sous l'adresse technique `*.cleverapps.io`, le site reste
   consultable mais interdit son indexation (`robots.txt` et en-tête `X-Robots-Tag`).
