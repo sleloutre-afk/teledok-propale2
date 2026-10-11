@@ -100,7 +100,7 @@ Même dispositif que les sites Capitello et Doxamed : application Node, add-on P
   (création des tables, contenus de départ, compilation).
 - **Contenus de départ** : `npm run seed` avec les variables de production.
 - **Démonstration** : l'application de démonstration tourne sur une instance XS avec l'offre
-  PostgreSQL « dev » (5 connexions, d'où `DATABASE_POOL_MAX=1`) et sans Cellar : les fichiers déposés
+  PostgreSQL « dev » (5 connexions, d'où `BUILD_WORKERS=1` à la compilation) et sans Cellar : les fichiers déposés
   dans le back-office y sont perdus à chaque redéploiement. `NEXT_PUBLIC_SITE_URL` y vaut l'adresse
   `*.cleverapps.io` de l'application, qui n'est jamais indexée.
 - **Adresses** : l'adresse officielle est celle de `NEXT_PUBLIC_SITE_URL`. Les autres domaines déclarés

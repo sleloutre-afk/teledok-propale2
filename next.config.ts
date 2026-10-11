@@ -4,6 +4,9 @@ import { withPayload } from '@payloadcms/next/withPayload'
 const nextConfig: NextConfig = {
   // Retire l'en-tête « X-Powered-By: Next.js ».
   poweredByHeader: false,
+  // Nombre de processus de pré-rendu à la compilation : à limiter (BUILD_WORKERS=1) quand la base
+  // n'accepte que quelques connexions, chaque processus en ouvrant jusqu'à 3.
+  ...(process.env.BUILD_WORKERS ? { experimental: { cpus: Number(process.env.BUILD_WORKERS) } } : {}),
   async headers() {
     return [
       {
