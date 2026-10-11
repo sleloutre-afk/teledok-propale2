@@ -1,0 +1,64 @@
+// Habillage du BO aux couleurs TeleDok (bleu #0D628F de la charte).
+//
+// Payload construit sa palette d'accent (liens, focus, zones de dépôt,
+// badges « publié »…) à partir de l'échelle --color-success-50 → 950,
+// reprise par --theme-success-* en clair et en sombre : la remplacer par
+// une déclinaison du bleu TeleDok rebrande l'interface sans toucher aux
+// composants.
+@layer payload-default {
+  :root {
+    --color-success-50: #f2f8fb;
+    --color-success-100: #e1eff7;
+    --color-success-150: #cfe4f0;
+    --color-success-200: #b9d7e8;
+    --color-success-250: #a0c8df;
+    --color-success-300: #84b7d4;
+    --color-success-350: #68a5c8;
+    --color-success-400: #4c93bb;
+    --color-success-450: #3082ad;
+    --color-success-500: #1b729e;
+    --color-success-550: #0d628f;
+    --color-success-600: #0b567e;
+    --color-success-650: #094a6c;
+    --color-success-700: #083e5b;
+    --color-success-750: #06334a;
+    --color-success-800: #05283a;
+    --color-success-850: #041e2b;
+    --color-success-900: #03151e;
+    --color-success-950: #020d13;
+  }
+}
+
+// Logo de l'écran de connexion : couleur en thème clair, blanc en thème sombre.
+@layer payload-default {
+  .teledok-logo {
+    display: inline-flex;
+
+    img {
+      display: block;
+      width: 220px;
+      height: auto;
+    }
+  }
+
+  .teledok-logo__dark,
+  html[data-theme='dark'] .teledok-logo__light {
+    display: none;
+  }
+
+  html[data-theme='dark'] .teledok-logo__dark {
+    display: block;
+  }
+}
+
+// Menu latéral teinté, repère de la page active aux couleurs du site.
+@layer payload-default {
+  .nav {
+    background: linear-gradient(180deg, var(--theme-success-100), var(--theme-elevation-0) 70%);
+    border-right-color: var(--theme-success-250);
+  }
+
+  .nav__link-indicator {
+    background: var(--theme-success-500);
+  }
+}

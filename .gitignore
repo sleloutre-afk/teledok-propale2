@@ -1,0 +1,17 @@
+/node_modules
+/.next/
+/out/
+.DS_Store
+._*
+*.pem
+npm-debug.log*
+.env
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+
+# payload — base SQLite locale et fichiers uploadés en local (dev) ; en production : Postgres et stockage S3
+/payload.db*
+/media
+/.media-s3
+/src/app/(payload)/BO/importMap.js
