@@ -29,7 +29,9 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:30
 /**
  * Vidéo d'arrière-plan de l'accueil : boucle muette, sans texte incrusté.
  * Les fichiers de public/videos sont la version web (H.264 720p allégé,
- * 2 Mo) et la première image de la source ../assets/videos/hero.mp4.
+ * 1,8 Mo) et la première image de la source ../../hero.mp4. Le fichier
+ * gardant son nom, « ?v= » est à incrémenter à chaque remplacement pour
+ * que les navigateurs ne resservent pas l'ancienne vidéo depuis leur cache.
  * Sans vidéo (src vide), l'accueil affiche l'emplacement réservé.
  */
-export const HERO_VIDEO: { src: string; poster?: string } = { src: '/videos/hero.mp4', poster: '/videos/hero.jpg' }
+export const HERO_VIDEO: { src: string; poster?: string } = { src: '/videos/hero.mp4?v=2', poster: '/videos/hero.jpg?v=2' }

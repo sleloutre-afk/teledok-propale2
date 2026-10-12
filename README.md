@@ -64,11 +64,12 @@ en production, le formulaire signale un échec d'envoi.
 ## Vidéo d'ouverture
 
 L'accueil lit en boucle `public/videos/hero.mp4`, avec `hero.jpg` comme image d'attente (chemins dans
-`HERO_VIDEO`, `src/lib/site.ts`). Ce sont des dérivés de la source `../assets/videos/hero.mp4` (14,5 Mo) :
-H.264 720p allégé à 2 Mo, sans son, lisible dès le début du téléchargement. Pour remplacer la vidéo :
+`HERO_VIDEO`, `src/lib/site.ts`). Ce sont des dérivés de la source `../../hero.mp4` (13,6 Mo) :
+H.264 720p allégé à 1,8 Mo, sans son, lisible dès le début du téléchargement. Pour remplacer la vidéo
+(puis incrémenter `?v=` dans `HERO_VIDEO`, les navigateurs gardant l'ancien fichier en cache) :
 
 ```bash
-ffmpeg -i ../assets/videos/hero.mp4 -an -c:v libx264 -preset slow -crf 25 -pix_fmt yuv420p -movflags +faststart public/videos/hero.mp4
+ffmpeg -i ../../hero.mp4 -an -c:v libx264 -preset slow -crf 25 -pix_fmt yuv420p -movflags +faststart public/videos/hero.mp4
 ffmpeg -i public/videos/hero.mp4 -frames:v 1 -q:v 5 public/videos/hero.jpg
 ```
 
